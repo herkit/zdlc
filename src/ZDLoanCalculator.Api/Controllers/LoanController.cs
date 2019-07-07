@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using ZDLoanCalculator.Core;
+using Microsoft.Extensions.Logging;
+using ZDLoanCalculator.Api.Models;
 using ZDLoanCalculator.Core.PaymentSchemes;
 
 namespace ZDLoanCalculator.Api.Controllers
@@ -13,18 +10,33 @@ namespace ZDLoanCalculator.Api.Controllers
     [ApiController]
     public class LoanController : ControllerBase
     {
+        private readonly ILogger<LoanController> logger;
         private readonly IPaymentSchemeProvider paymentSchemeProvider;
 
-        public LoanController(IPaymentSchemeProvider paymentSchemeProvider)
+        public LoanController(ILogger<LoanController> logger, IPaymentSchemeProvider paymentSchemeProvider)
         {
+            this.logger = logger;
             this.paymentSchemeProvider = paymentSchemeProvider;
         }
 
-        [Route("{loanType}/{schemeName}")]
-        public ActionResult GetPaymentPlan(string loanType, string schemeName, decimal loanAmount, int periods)
+        [Route("plan")]
+        public ActionResult GetPaymentPlan([FromQuery] LoanRequest loanRequest)
         {
-            var scheme = paymentSchemeProvider.GetScheme(schemeName);
-            return Ok(scheme.GetPayments(loanAmount, 0.035f, periods, 12));
+            try { 
+                var scheme = paymentSchemeProvider.GetScheme(loanRequest.PaymentScheme);
+                return Ok(scheme.GetPayments(loanRequest.LoanAmount, 0.035f, loanRequest.Periods, 12));
+            }
+            catch (ArgumentException argumentException)
+            {
+                if (argumentException.ParamName == "schemeName")
+                    ModelState.AddModelError("schemeName", "Payment scheme must be a valid scheme");
+                return BadRequest(ModelState);
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Something went wrong when getting payment plan");
+                return StatusCode(500, "Ooops, somthing we did not expect has happened");
+            }
         }
     }
 }
