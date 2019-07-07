@@ -17,5 +17,20 @@ namespace ZDLoanCalculator.Test.PaymentSchemes
             payments.Count().Should().Be(1);
             payments.First().AmountDue.Should().Be(1010);
         }
+
+        [Test]
+        public void Should_be_able_to_calculate_multiple_periods()
+        {
+            var scheme = new SeriesLoanPaymentScheme();
+            var payments = scheme.GetPayments(1000, 0.12f, 4, 12).GetEnumerator();
+            payments.MoveNext();
+            payments.Current.AmountDue.Should().Be(260);
+            payments.MoveNext();
+            payments.Current.AmountDue.Should().Be(257.5m);
+            payments.MoveNext();
+            payments.Current.AmountDue.Should().Be(255m);
+            payments.MoveNext();
+            payments.Current.AmountDue.Should().Be(252.5m);
+        }
     }
 }

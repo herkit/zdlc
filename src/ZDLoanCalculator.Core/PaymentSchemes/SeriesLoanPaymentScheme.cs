@@ -10,8 +10,14 @@ namespace ZDLoanCalculator.Core.PaymentSchemes
         public IEnumerable<Payment> GetPayments(decimal initialLoan, float interestRate, int totalPeriods, int periodsPerYear)
         {
             var interestRatePerPeriod = interestRate / periodsPerYear;
-            decimal interestThisPeriod = (decimal)(((double)initialLoan * 1000) * interestRatePerPeriod) / 1000;
-            yield return new Payment { AmountDue = Math.Round(initialLoan + interestThisPeriod, 3) };
+            decimal paymentPerPeriod = (decimal)(((double)initialLoan * 1000) / totalPeriods) / 1000;
+
+            var remainingLoan = initialLoan;
+            for (var periodNo = 0; periodNo < totalPeriods; periodNo++) {
+                decimal interestThisPeriod = (decimal)(((double)remainingLoan * 1000) * interestRatePerPeriod) / 1000;
+                yield return new Payment { AmountDue = Math.Round(paymentPerPeriod + interestThisPeriod, 3) };
+                remainingLoan = remainingLoan - paymentPerPeriod;
+            }
         }
     }
 }
