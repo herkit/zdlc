@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ZDLoanCalculator.Core.PaymentSchemes
 {
-    interface IPaymentScheme
+    public interface IPaymentScheme
     {
         IEnumerable<Payment> GetPayments(decimal initalLoan, float interestRate, int totalPeriods, int periodsPerYear);
     }
