@@ -20,7 +20,7 @@ namespace ZDLoanCalculator.Api.Controllers
             this.paymentSchemeProvider = paymentSchemeProvider;
         }
 
-        [Route("loan/{loanType}/{schemeName}")]
+        [Route("{loanType}/{schemeName}")]
         public IEnumerable<Payment> GetPaymentPlan(string loanType, string schemeName, decimal loanAmount, int periods)
         {
             var scheme = paymentSchemeProvider.GetScheme(schemeName);

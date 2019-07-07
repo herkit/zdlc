@@ -31,6 +31,8 @@ namespace ZDLoanCalculator.Test.Api
             var response = controller.GetPaymentPlan("house", "series", 1000000, 2);
 
             response.Count().Should().Be(2);
+            response.First().AmountDue.Should().Be(1000);
+            response.Last().AmountDue.Should().Be(900);
         }
 
         [SetUp]
