@@ -1,10 +1,9 @@
 ﻿using FluentAssertions;
+using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
 using ZDLoanCalculator.Api.Controllers;
 using ZDLoanCalculator.Core;
 using ZDLoanCalculator.Core.PaymentSchemes;
@@ -30,9 +29,12 @@ namespace ZDLoanCalculator.Test.Api
 
             var response = controller.GetPaymentPlan("house", "series", 1000000, 2);
 
-            response.Count().Should().Be(2);
-            response.First().AmountDue.Should().Be(1000);
-            response.Last().AmountDue.Should().Be(900);
+            response.Should().BeOfType<OkObjectResult>();
+            var okResuls = response as OkObjectResult;
+            var payments = okResuls.Value as IEnumerable<Payment>;
+            payments.Count().Should().Be(2);
+            payments.First().AmountDue.Should().Be(1000);
+            payments.Last().AmountDue.Should().Be(900);
         }
 
         [SetUp]
