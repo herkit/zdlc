@@ -26,21 +26,20 @@ namespace ZDLoanCalculator.Api.Controllers
         [Route("plan")]
         public async Task<ActionResult> GetPaymentPlan([FromQuery] LoanRequest loanRequest)
         {
-            try { 
+            try {
                 var scheme = paymentSchemeProvider.GetScheme(loanRequest.PaymentScheme);
                 var loanType = await loanTypeRepository.GetAsync(loanRequest.LoanType);
                 return Ok(scheme.GetPayments(loanRequest.LoanAmount, loanType.InterestRate, loanRequest.Periods, 12));
             }
             catch (ArgumentException argumentException)
             {
-                if (argumentException.ParamName == "schemeName")
-                    ModelState.AddModelError("schemeName", "Payment scheme must be a valid scheme");
+                ModelState.AddModelError(argumentException.ParamName, argumentException.Message);
                 return BadRequest(ModelState);
             }
             catch (Exception ex)
             {
                 logger.LogError(ex, "Something went wrong when getting payment plan");
-                return StatusCode(500, "Ooops, somthing we did not expect has happened");
+                return StatusCode(500, "Ooops, something we did not expect has happened");
             }
         }
 
