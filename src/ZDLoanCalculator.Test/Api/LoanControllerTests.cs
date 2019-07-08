@@ -25,14 +25,17 @@ namespace ZDLoanCalculator.Test.Api
         }
 
         [Test]
-        public void Should_retrieve_payment_plan_from_selected_scheme()
+        public async Task Should_retrieve_payment_plan_from_selected_scheme()
         {
             Payment_scheme_returns(
                 new Payment { AmountDue = 1000 },
                 new Payment { AmountDue = 900 }
             );
+            mockLoanTypeRepository
+                .Setup(r => r.GetAsync(It.IsAny<string>()))
+                .Returns(Task.FromResult(new LoanType()));
 
-            var response = controller
+            var response = await controller
                 .GetPaymentPlan(
                     new LoanRequest {
                         LoanType = "house",
@@ -50,11 +53,11 @@ namespace ZDLoanCalculator.Test.Api
         }
 
         [Test]
-        public void Should_return_bad_request_on_non_existing_scheme()
+        public async Task Should_return_bad_request_on_non_existing_scheme()
         {
             mockPaymentSchemeProvider.Setup(p => p.GetScheme("nonexisting")).Throws(new ArgumentException("", "schemeName"));
 
-            var response = controller
+            var response = await controller
                 .GetPaymentPlan(
                     new LoanRequest
                     {
@@ -67,6 +70,29 @@ namespace ZDLoanCalculator.Test.Api
             response.Should().BeOfType<BadRequestObjectResult>();
             var badRequestResult = response as BadRequestObjectResult;
             badRequestResult.Value.Should().BeOfType<SerializableError>();
+        }
+
+        [TestCase(0.035f)]
+        [TestCase(0.105f)]
+        public void Should_use_interest_rate_from_loan_type(float interestRate)
+        {
+            mockLoanTypeRepository
+                .Setup(r => r.GetAsync(It.IsAny<string>()))
+                .Returns<string>((key) => Task.FromResult(
+                    new LoanType { InterestRate = interestRate, Key = key }
+                ));
+
+            var response = controller
+                .GetPaymentPlan(
+                    new LoanRequest
+                    {
+                        LoanType = "house",
+                        PaymentScheme = "series",
+                        LoanAmount = 1000000,
+                        Periods = 2
+                    });
+
+            mockPaymentScheme.Verify(s => s.GetPayments(1000000, interestRate, 2, 12), Times.Once());
         }
 
         [Test]

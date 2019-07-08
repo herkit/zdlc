@@ -24,11 +24,12 @@ namespace ZDLoanCalculator.Api.Controllers
         }
 
         [Route("plan")]
-        public ActionResult GetPaymentPlan([FromQuery] LoanRequest loanRequest)
+        public async Task<ActionResult> GetPaymentPlan([FromQuery] LoanRequest loanRequest)
         {
             try { 
                 var scheme = paymentSchemeProvider.GetScheme(loanRequest.PaymentScheme);
-                return Ok(scheme.GetPayments(loanRequest.LoanAmount, 0.035f, loanRequest.Periods, 12));
+                var loanType = await loanTypeRepository.GetAsync(loanRequest.LoanType);
+                return Ok(scheme.GetPayments(loanRequest.LoanAmount, loanType.InterestRate, loanRequest.Periods, 12));
             }
             catch (ArgumentException argumentException)
             {
