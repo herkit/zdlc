@@ -27,8 +27,11 @@ namespace ZDLoanCalculator.Api.Controllers
         public async Task<ActionResult> GetPaymentPlan([FromQuery] LoanRequest loanRequest)
         {
             try {
-                var scheme = paymentSchemeProvider.GetScheme(loanRequest.PaymentScheme);
                 var loanType = await loanTypeRepository.GetAsync(loanRequest.LoanType);
+                if (loanType == null)
+                    throw new ArgumentException("Loan type does not exist", "loanType");
+
+                var scheme = paymentSchemeProvider.GetScheme(loanRequest.PaymentScheme);
                 return Ok(scheme.GetPayments(loanRequest.LoanAmount, loanType.InterestRate, loanRequest.Periods, 12));
             }
             catch (ArgumentException argumentException)

@@ -72,15 +72,33 @@ namespace ZDLoanCalculator.Test.Api
             badRequestResult.Value.Should().BeOfType<SerializableError>();
         }
 
+        [Test]
+        public async Task Should_return_bad_request_on_non_existing_loan_type()
+        {
+            mockLoanTypeRepository
+                .Setup(p => p.GetAsync(It.IsAny<string>()))
+                .Returns(Task.FromResult((LoanType)null));
+
+            var response = await controller
+                .GetPaymentPlan(
+                    new LoanRequest
+                    {
+                        LoanType = "nonexisting",
+                        PaymentScheme = "series",
+                        LoanAmount = 1000000,
+                        Periods = 2
+                    });
+
+            response.Should().BeOfType<BadRequestObjectResult>();
+            var badRequestResult = response as BadRequestObjectResult;
+            badRequestResult.Value.Should().BeOfType<SerializableError>();
+        }
+
         [TestCase(0.035f)]
         [TestCase(0.105f)]
         public void Should_use_interest_rate_from_loan_type(float interestRate)
         {
-            mockLoanTypeRepository
-                .Setup(r => r.GetAsync(It.IsAny<string>()))
-                .Returns<string>((key) => Task.FromResult(
-                    new LoanType { InterestRate = interestRate, Key = key }
-                ));
+            Returned_loan_type_has(interestRate);
 
             var response = controller
                 .GetPaymentPlan(
@@ -110,8 +128,10 @@ namespace ZDLoanCalculator.Test.Api
             var response = await controller.GetLoanTypes();
 
             response.Should().BeOfType<OkObjectResult>();
+
             var okResult = response as OkObjectResult;
             var loanTypes = okResult.Value as IEnumerable<LoanType>;
+
             loanTypes.Count().Should().Be(2);
             loanTypes.First().Key.Should().Be("house");
             loanTypes.Last().Key.Should().Be("car");
@@ -133,6 +153,15 @@ namespace ZDLoanCalculator.Test.Api
             mockPaymentScheme
                 .Setup(ps => ps.GetPayments(It.IsAny<decimal>(), It.IsAny<float>(), It.IsAny<int>(), It.IsAny<int>()))
                 .Returns(() => payments.ToList());
+        }
+
+        private void Returned_loan_type_has(float interestRate)
+        {
+            mockLoanTypeRepository
+                .Setup(r => r.GetAsync(It.IsAny<string>()))
+                .Returns<string>((key) => Task.FromResult(
+                    new LoanType { InterestRate = interestRate, Key = key }
+                ));
         }
 
         private LoanController controller;
