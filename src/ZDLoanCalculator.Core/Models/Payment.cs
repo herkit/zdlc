@@ -1,4 +1,4 @@
-﻿namespace ZDLoanCalculator.Core
+﻿namespace ZDLoanCalculator.Core.Models
 {
     public class Payment
     {

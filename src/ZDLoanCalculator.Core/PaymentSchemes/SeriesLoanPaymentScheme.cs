@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using ZDLoanCalculator.Core.Models;
 
 namespace ZDLoanCalculator.Core.PaymentSchemes
 {

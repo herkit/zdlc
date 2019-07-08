@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ZDLoanCalculator.Core\ZDLoanCalculator.Core.csproj" />
+    <ProjectReference Include="..\ZDLoanCalculator.Data.EntityFramework\ZDLoanCalculator.Data.EntityFramework.csproj" />
   </ItemGroup>
 
 </Project>

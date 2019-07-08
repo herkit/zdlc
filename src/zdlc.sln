@@ -3,15 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.705
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZDLoanCalculator.Api", "ZDLoanCalculator.Api\ZDLoanCalculator.Api.csproj", "{12E503DD-82F1-4F79-A814-6902E7D64EAC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZDLoanCalculator.Api", "ZDLoanCalculator.Api\ZDLoanCalculator.Api.csproj", "{12E503DD-82F1-4F79-A814-6902E7D64EAC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZDLoanCalculator.Core", "ZDLoanCalculator.Core\ZDLoanCalculator.Core.csproj", "{E71AA75F-9A14-4784-9BF5-CF2EE126AE58}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZDLoanCalculator.Core", "ZDLoanCalculator.Core\ZDLoanCalculator.Core.csproj", "{E71AA75F-9A14-4784-9BF5-CF2EE126AE58}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZDLoanCalculator.Test", "ZDLoanCalculator.Test\ZDLoanCalculator.Test.csproj", "{49938CBB-67C9-403F-ACC3-6CC7C30D1F53}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZDLoanCalculator.Test", "ZDLoanCalculator.Test\ZDLoanCalculator.Test.csproj", "{49938CBB-67C9-403F-ACC3-6CC7C30D1F53}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZDLoanCalculator.IntegrationTest", "ZDLoanCalculator.IntegrationTest\ZDLoanCalculator.IntegrationTest.csproj", "{1F705F66-7948-4551-BC09-B74E3B43597D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZDLoanCalculator.IntegrationTest", "ZDLoanCalculator.IntegrationTest\ZDLoanCalculator.IntegrationTest.csproj", "{1F705F66-7948-4551-BC09-B74E3B43597D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZDLoanCalculator.Web", "ZDLoanCalculator.Web\ZDLoanCalculator.Web.csproj", "{1D80E52C-0E55-4741-B9C9-D94014BEA256}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZDLoanCalculator.Web", "ZDLoanCalculator.Web\ZDLoanCalculator.Web.csproj", "{1D80E52C-0E55-4741-B9C9-D94014BEA256}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZDLoanCalculator.Data.EntityFramework", "ZDLoanCalculator.Data.EntityFramework\ZDLoanCalculator.Data.EntityFramework.csproj", "{15EDABEF-707F-4054-8C5F-8A72E0A3EF2C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{1D80E52C-0E55-4741-B9C9-D94014BEA256}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1D80E52C-0E55-4741-B9C9-D94014BEA256}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1D80E52C-0E55-4741-B9C9-D94014BEA256}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15EDABEF-707F-4054-8C5F-8A72E0A3EF2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15EDABEF-707F-4054-8C5F-8A72E0A3EF2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15EDABEF-707F-4054-8C5F-8A72E0A3EF2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15EDABEF-707F-4054-8C5F-8A72E0A3EF2C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

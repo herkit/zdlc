@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ZDLoanCalculator.Api.Models;
+using ZDLoanCalculator.Core.Data;
 using ZDLoanCalculator.Core.PaymentSchemes;
 
 namespace ZDLoanCalculator.Api.Controllers
@@ -12,11 +14,13 @@ namespace ZDLoanCalculator.Api.Controllers
     {
         private readonly ILogger<LoanController> logger;
         private readonly IPaymentSchemeProvider paymentSchemeProvider;
+        private readonly ILoanTypeRepository loanTypeRepository;
 
-        public LoanController(ILogger<LoanController> logger, IPaymentSchemeProvider paymentSchemeProvider)
+        public LoanController(ILogger<LoanController> logger, IPaymentSchemeProvider paymentSchemeProvider, ILoanTypeRepository loanTypeRepository)
         {
             this.logger = logger;
             this.paymentSchemeProvider = paymentSchemeProvider;
+            this.loanTypeRepository = loanTypeRepository;
         }
 
         [Route("plan")]
@@ -37,6 +41,12 @@ namespace ZDLoanCalculator.Api.Controllers
                 logger.LogError(ex, "Something went wrong when getting payment plan");
                 return StatusCode(500, "Ooops, somthing we did not expect has happened");
             }
+        }
+
+        [Route("types")]
+        public async Task<ActionResult> GetLoanTypes()
+        {
+            return Ok(await loanTypeRepository.GetAllAsync());
         }
     }
 }

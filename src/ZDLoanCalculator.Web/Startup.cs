@@ -1,10 +1,12 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace ZDLoanCalculator.Web
 {
@@ -53,6 +55,8 @@ namespace ZDLoanCalculator.Web
                     template: "{controller}/{action=Index}/{id?}");
             });
 
+            //app.MapWhen(IsApiPath, builder => builder.RunProxy(Configuration.GetSection("Api") as ProxyOptions));
+
             app.UseSpa(spa =>
             {
                 // To learn more about options for serving an Angular SPA from ASP.NET Core,
@@ -65,6 +69,11 @@ namespace ZDLoanCalculator.Web
                     spa.UseAngularCliServer(npmScript: "start");
                 }
             });
+        }
+
+        private static bool IsApiPath(HttpContext httpContext)
+        {
+            return httpContext.Request.Path.Value.StartsWith(@"/api/", StringComparison.OrdinalIgnoreCase);
         }
     }
 }
