@@ -6,7 +6,7 @@ using ZDLoanCalculator.Core.Models;
 
 namespace ZDLoanCalculator.Core.PaymentSchemes
 {
-    public class SeriesLoanPaymentScheme : IPaymentScheme
+    public class SeriesPaymentScheme : IPaymentScheme
     {
         public IEnumerable<Payment> GetPayments(decimal initialLoan, float interestRate, int totalPeriods, int periodsPerYear)
         {

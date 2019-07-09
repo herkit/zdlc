@@ -137,6 +137,30 @@ namespace ZDLoanCalculator.Test.Api
             loanTypes.Last().Key.Should().Be("car");
         }
 
+        [Test]
+        public void Should_return_list_of_payment_schemes()
+        {
+            mockPaymentSchemeProvider
+                .Setup(p => p.GetAll())
+                .Returns(new[] {
+                    new KeyValuePair<string, string>("series", "Series loan"),
+                    new KeyValuePair<string, string>("annuity", "Annuity loan")
+                }.AsEnumerable());
+
+            var response = controller.GetPaymentSchemes();
+
+            response.Should().BeOfType<OkObjectResult>();
+
+            var okResult = response as OkObjectResult;
+            var paymentSchemes = okResult.Value as IEnumerable<KeyValuePair<string, string>>;
+
+            paymentSchemes.Count().Should().Be(2);
+            paymentSchemes.First().Key.Should().Be("series");
+            paymentSchemes.First().Value.Should().Be("Series loan");
+            paymentSchemes.Last().Key.Should().Be("annuity");
+            paymentSchemes.Last().Value.Should().Be("Annuity loan");
+        }
+
         [SetUp]
         public void Setup()
         {

@@ -12,7 +12,7 @@ namespace ZDLoanCalculator.Test.PaymentSchemes
         [Test]
         public void Should_be_able_to_calculate_one_period()
         {
-            var scheme = new SeriesLoanPaymentScheme();
+            var scheme = new SeriesPaymentScheme();
             var payments = scheme.GetPayments(1000, 0.12f, 1, 12);
             payments.Count().Should().Be(1);
             payments.First().AmountDue.Should().Be(1010);
@@ -21,7 +21,7 @@ namespace ZDLoanCalculator.Test.PaymentSchemes
         [Test]
         public void Should_be_able_to_calculate_multiple_periods()
         {
-            var scheme = new SeriesLoanPaymentScheme();
+            var scheme = new SeriesPaymentScheme();
             var payments = scheme.GetPayments(1000, 0.12f, 4, 12).GetEnumerator();
             payments.MoveNext();
             payments.Current.PeriodNumber.Should().Be(1);

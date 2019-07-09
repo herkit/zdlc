@@ -51,5 +51,11 @@ namespace ZDLoanCalculator.Api.Controllers
         {
             return Ok(await loanTypeRepository.GetAllAsync());
         }
+
+        [Route("schemes")]
+        public ActionResult GetPaymentSchemes()
+        {
+            return Ok(paymentSchemeProvider.GetAll());
+        }
     }
 }
