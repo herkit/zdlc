@@ -1,0 +1,37 @@
+<form id="loanApplication">
+
+  <label id="loan-type-label">What type of loan do you need?</label>
+  <mat-radio-group aria-labelledby="loan-type-label"
+                   class="vertical-radio-group"
+                   name="loanType"
+                   required>
+    <mat-radio-button class="vertical-radio-button" *ngFor="let loanType of loanTypes" [value]="loanType.key">
+      {{loanType.description}}
+    </mat-radio-button>
+  </mat-radio-group>
+
+  <label id="payment-scheme-label">What payment scheme do you desire?</label>
+  <mat-radio-group aria-labelledby="payment-scheme-label"
+                   class="vertical-radio-group"
+                   name="paymentScheme"
+                   required>
+    <mat-radio-button class="vertical-radio-button" *ngFor="let paymentScheme of paymentSchemes" [value]="paymentScheme.key">
+      {{paymentScheme.value}}
+    </mat-radio-button>
+  </mat-radio-group>
+
+
+  <mat-form-field name="loanAmount">
+    <input matInput placeholder="Loan amount" required />
+  </mat-form-field>
+
+  <section>
+    <mat-slider min="1" max="300" name="periods" tickInterval="12" thumbLabel>
+
+    </mat-slider>
+  </section>
+
+    <div>
+      <button mat-raised-button color="primary">Calculate my loan</button>
+    </div>
+</form>
