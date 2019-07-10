@@ -1,23 +1,26 @@
 <mat-card fxFlex="1 1 50%" fxFlexOffset="25%">
-    <mat-card-content>
-        <table mat-table [dataSource]="payments" class="mat-elevation-z1">
-            <ng-container matColumnDef="periodNumber">
-                <th mat-header-cell *matHeaderCellDef>Period</th>
-                <td mat-cell *matCellDef="let payment">{{ payment.periodNumber }} </td>
-            </ng-container>
+  <mat-card-title>
+    Loan Calculation
+  </mat-card-title>
+  <mat-card-content>
+    <table mat-table [dataSource]="payments" class="mat-elevation-z1">
+      <ng-container matColumnDef="periodNumber">
+        <th mat-header-cell *matHeaderCellDef>Period</th>
+        <td mat-cell *matCellDef="let payment">{{ payment.periodNumber }} </td>
+      </ng-container>
 
-            <ng-container matColumnDef="amountDue">
-                <th mat-header-cell *matHeaderCellDef>Amount Due</th>
-                <td mat-cell *matCellDef="let payment">{{ payment.amountDue | currency }} </td>
-            </ng-container>
+      <ng-container matColumnDef="amountDue">
+        <th mat-header-cell *matHeaderCellDef>Amount Due</th>
+        <td mat-cell *matCellDef="let payment">{{ payment.amountDue | currency }} </td>
+      </ng-container>
 
-            <ng-container matColumnDef="interests">
-                <th mat-header-cell *matHeaderCellDef>Interests</th>
-                <td mat-cell *matCellDef="let payment">{{ payment.interests | currency }} </td>
-            </ng-container>
+      <ng-container matColumnDef="interests">
+        <th mat-header-cell *matHeaderCellDef>Interests</th>
+        <td mat-cell *matCellDef="let payment">{{ payment.interests | currency }} </td>
+      </ng-container>
 
-            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
-    </mat-card-content>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </mat-card-content>
 </mat-card>
