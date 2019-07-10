@@ -11,3 +11,6 @@ $theme: mat-light-theme($primary, $accent);
 
 // Include theme styles for Angular Material components.
 @include angular-material-theme($theme);
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

@@ -1,4 +1,4 @@
-<mat-card class="mat-elevation-z1">
+<mat-card class="mat-elevation-z1" fxFlex="1 1 50%" fxFlexOffset="25%">
 <form id="loanApplication" [formGroup]="applicationForm" (ngSubmit)="calculate()">
 
   <label id="loan-type-label">What type of loan do you need?</label>
@@ -25,15 +25,18 @@
   </mat-radio-group>
   <mat-error *ngIf="hasError('paymentScheme', 'required')">You must choose a payment scheme</mat-error>
 
-  <mat-form-field >
-    <input matInput type="number" placeholder="Loan amount" required min="1000" max="1000000000" formControlName="loanAmount" name="loanAmount" step="1000"/>
-  </mat-form-field>
-  <mat-error *ngIf="hasError('loanAmount', 'required')">You must enter the desired loan amount</mat-error>
+  <label id="loan-amount-scheme-label">How much do you need to loan?</label>
+  <section>
+    <mat-form-field >
+      <input matInput type="number" placeholder="Loan amount" required min="1000" max="1000000000" formControlName="loanAmount" name="loanAmount" step="1000"/>
+    </mat-form-field>
+    <mat-error *ngIf="hasError('loanAmount', 'required')">You must enter the desired loan amount</mat-error>
+  </section>
 
   <section>
-    <mat-slider min="1" max="300" name="periods" tickInterval="12" thumbLabel formControlName="periods" name="periods">
-    </mat-slider>
+    <mat-slider min="1" max="300" name="periods" tickInterval="12" thumbLabel formControlName="periods" name="periods"></mat-slider>
   </section>
+  <mat-hint>Number of months to pay down the loan</mat-hint>
 
     <div>
       <button mat-raised-button color="primary" [disabled]="!applicationForm.valid">Calculate my loan</button>

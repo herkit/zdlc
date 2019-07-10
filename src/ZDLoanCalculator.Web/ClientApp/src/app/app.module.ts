@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -14,7 +15,8 @@ import {
   MatButtonModule,
   MatSliderModule,
   MatTableModule,
-  MatCardModule
+  MatCardModule,
+  MatSidenavModule
 } from '@angular/material';
 
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -24,7 +26,8 @@ import { LoanCalculationComponent } from './loan-calculation/loan-calculation.co
 
 const FRAMEWORK_MODULES = [
   ReactiveFormsModule,
-  BrowserAnimationsModule
+  BrowserAnimationsModule,
+  FlexLayoutModule
 ]
 
 const MATERIAL_MODULES = [
@@ -34,7 +37,8 @@ const MATERIAL_MODULES = [
   MatButtonModule,
   MatSliderModule,
   MatTableModule,
-  MatCardModule
+  MatCardModule,
+  MatSidenavModule
 ]
 
 @NgModule({
@@ -54,6 +58,7 @@ const MATERIAL_MODULES = [
       { path: 'apply', component: LoanApplicationComponent },
       { path: 'calculation', component: LoanCalculationComponent }
     ]),
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
