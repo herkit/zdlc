@@ -33,10 +33,11 @@
     <mat-error *ngIf="hasError('loanAmount', 'required')">You must enter the desired loan amount</mat-error>
   </section>
 
+  <label id="loan-amount-scheme-label">For how long do you need to borrow the money?</label>
   <section>
-    <mat-slider min="1" max="300" name="periods" tickInterval="12" thumbLabel formControlName="periods" name="periods"></mat-slider>
+    <mat-slider min="0" max="300" name="periods" tickInterval="12" thumbLabel formControlName="periods" name="periods"></mat-slider>
   </section>
-  <mat-hint>Number of months to pay down the loan</mat-hint>
+  <mat-hint>Number of months</mat-hint>
 
     <div>
       <button mat-raised-button color="primary" [disabled]="!applicationForm.valid">Calculate my loan</button>

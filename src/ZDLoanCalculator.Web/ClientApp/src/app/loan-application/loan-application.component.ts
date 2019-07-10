@@ -26,7 +26,7 @@ export class LoanApplicationComponent implements OnInit {
     this.applicationForm = new FormGroup({
       loanType: new FormControl('', [Validators.required]),
       paymentScheme: new FormControl('', [Validators.required]),
-      loanAmount: new FormControl('', [Validators.required, Validators.max(100000000), Validators.min(1)]),
+      loanAmount: new FormControl('', [Validators.required, Validators.max(100000000), Validators.min(1000)]),
       periods: new FormControl('', [Validators.required, Validators.min(1), Validators.max(360)])
     })
   }
