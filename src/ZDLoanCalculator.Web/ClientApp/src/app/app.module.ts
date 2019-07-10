@@ -12,15 +12,17 @@ import {
   MatRadioModule,
   MatInputModule,
   MatButtonModule,
-  MatSliderModule
+  MatSliderModule,
+  MatTableModule,
+  MatCardModule
 } from '@angular/material';
 
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LoanCalculationComponent } from './loan-calculation/loan-calculation.component';
 
 
 const FRAMEWORK_MODULES = [
-  FormsModule,
   ReactiveFormsModule,
   BrowserAnimationsModule
 ]
@@ -30,14 +32,17 @@ const MATERIAL_MODULES = [
   MatRadioModule,
   MatInputModule,
   MatButtonModule,
-  MatSliderModule
+  MatSliderModule,
+  MatTableModule,
+  MatCardModule
 ]
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    LoanApplicationComponent
+    LoanApplicationComponent,
+    LoanCalculationComponent
   ],
   imports: [
     ...FRAMEWORK_MODULES,
@@ -46,7 +51,8 @@ const MATERIAL_MODULES = [
     AppRoutingModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent },
-      { path: 'apply', component: LoanApplicationComponent }
+      { path: 'apply', component: LoanApplicationComponent },
+      { path: 'calculation', component: LoanCalculationComponent }
     ]),
   ],
   providers: [],

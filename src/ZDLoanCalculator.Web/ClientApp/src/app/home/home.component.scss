@@ -1,0 +1,16 @@
+@import '~@angular/material/theming';
+
+@import '../../variables.scss';
+
+$foreground: map-get($theme, foreground);
+$background: map-get($theme, background);
+
+.header {
+    background-color: mat-color($primary);
+    color: mat-color($primary, lighter);
+    height: 20em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
