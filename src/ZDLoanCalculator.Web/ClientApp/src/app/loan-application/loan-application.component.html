@@ -1,36 +1,29 @@
 <mat-card class="mat-elevation-z1" fxFlex="1 1 50%" fxFlexOffset="25%">
-  <form id="loanApplication" [formGroup]="applicationForm" (ngSubmit)="calculate()">
-    <mat-card-title>
-      Loan application
-    </mat-card-title>
-    <mat-card-content>
+    <form id="loanApplication" [formGroup]="applicationForm" (ngSubmit)="calculate()">
+
+  <mat-card-title>
+    Loan application
+  </mat-card-title>
+
+  <div *ngIf="!isReady()" style="height: 20em; text-align: center" fxFlexAlign="center center">
+    <mat-spinner></mat-spinner>
+  </div>
+
+    <mat-card-content *ngIf="isReady()">
       <label id="loan-type-label">What type of loan do you need?</label>
-      <mat-radio-group 
-          aria-labelledby="loan-type-label"
-          class="vertical-radio-group"
-          formControlName="loanType"
-          name="loanType"
-          required>
-        <mat-radio-button 
-            class="vertical-radio-button" 
-            *ngFor="let loanType of loanTypes" 
-            [value]="loanType.key">
+      <mat-radio-group aria-labelledby="loan-type-label" class="vertical-radio-group" formControlName="loanType"
+        name="loanType" required>
+        <mat-radio-button class="vertical-radio-button" *ngFor="let loanType of loanTypes" [value]="loanType.key">
           {{loanType.description}}
         </mat-radio-button>
         <mat-error *ngIf="hasError('loanType', 'required')">You must choose a loan type</mat-error>
       </mat-radio-group>
 
       <label id="payment-scheme-label">What payment scheme do you desire?</label>
-      <mat-radio-group 
-          aria-labelledby="payment-scheme-label"
-          class="vertical-radio-group"
-          formControlName="paymentScheme"
-          name="paymentScheme"
-          required>
-        <mat-radio-button 
-            class="vertical-radio-button" 
-            *ngFor="let paymentScheme of paymentSchemes" 
-            [value]="paymentScheme.key">
+      <mat-radio-group aria-labelledby="payment-scheme-label" class="vertical-radio-group"
+        formControlName="paymentScheme" name="paymentScheme" required>
+        <mat-radio-button class="vertical-radio-button" *ngFor="let paymentScheme of paymentSchemes"
+          [value]="paymentScheme.key">
           {{paymentScheme.value}}
         </mat-radio-button>
         <mat-error *ngIf="hasError('paymentScheme', 'required')">You must choose a payment scheme</mat-error>
@@ -38,27 +31,19 @@
 
       <label id="loan-amount-scheme-label">How much do you need to loan?</label>
       <section>
-        <mat-form-field >
-          <input 
-              matInput 
-              type="number" 
-              placeholder="Loan amount" 
-              step="1000"
-              autocomplete="off"
-              formControlName="loanAmount" 
-              name="loanAmount" 
-              required 
-              min="1000" 
-              max="1000000000" />
+        <mat-form-field>
+          <input matInput type="number" placeholder="Loan amount" step="1000" autocomplete="off"
+            formControlName="loanAmount" name="loanAmount" required min="1000" max="1000000000" />
           <mat-error *ngIf="hasError('loanAmount', 'required')">You must enter the desired loan amount</mat-error>
           <mat-error *ngIf="hasError('loanAmount', 'min')">The minimum loan is 1.000</mat-error>
           <mat-error *ngIf="hasError('loanAmount', 'max')">The maximum loan is 1.000.000.000</mat-error>
-          </mat-form-field>
+        </mat-form-field>
       </section>
 
       <label id="loan-amount-scheme-label">For how long do you need to borrow the money?</label>
       <section>
-        <mat-slider min="0" max="300" name="periods" tickInterval="12" thumbLabel formControlName="periods" name="periods"></mat-slider>
+        <mat-slider min="0" max="300" name="periods" tickInterval="12" thumbLabel formControlName="periods"
+          name="periods"></mat-slider>
       </section>
       <mat-hint>Number of months</mat-hint>
 

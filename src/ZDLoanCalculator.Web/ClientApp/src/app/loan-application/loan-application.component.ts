@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm, FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { LoanType, PaymentScheme } from '../types';
+import { LoanCalculatorService } from '../services/loan-calculator.service';
 
 @Component({
   selector: 'app-loan-application',
@@ -9,20 +11,15 @@ import { Router } from '@angular/router';
 })
 export class LoanApplicationComponent implements OnInit {
   public applicationForm: FormGroup;
+  public loanTypes: LoanType[];
+  public paymentSchemes: PaymentScheme[];
 
-  constructor(private router: Router) { }
-
-  loanTypes: any[] = [
-    { key: "house", description: "House loan", interestRate: 0.035 },
-    { key: "car", description: "Car loan", interestRate: 0.035 },
-  ];
-
-  paymentSchemes: any[] = [
-    { key: "series", value: "Series loan" },
-    { key: "annuity", value: "Annuity loan" },
-  ]
+  constructor(private router: Router, private loanCalculatorService: LoanCalculatorService) { }
 
   ngOnInit() {
+    this.loanCalculatorService.getLoanTypes().subscribe(loanTypes => this.loanTypes = loanTypes);
+    this.loanCalculatorService.getPaymentSchemes().subscribe(paymentSchemes => this.paymentSchemes = paymentSchemes);
+
     this.applicationForm = new FormGroup({
       loanType: new FormControl('', [Validators.required]),
       paymentScheme: new FormControl('', [Validators.required]),
@@ -36,11 +33,15 @@ export class LoanApplicationComponent implements OnInit {
   }
 
   calculate() {
-
-    console.log(this.applicationForm.value);
     if (!this.applicationForm.invalid) {
       this.router.navigate(["/calculation"], { queryParams: this.applicationForm.value });
     }
+  }
+
+  isReady() {
+    if (this.loanTypes && this.paymentSchemes)
+      return true;
+    return false;
   }
 
 }
