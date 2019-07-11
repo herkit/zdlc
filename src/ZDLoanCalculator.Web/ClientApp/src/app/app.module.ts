@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { NgModule } from '@angular/core';
+import { HttpClientModule }    from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -28,7 +29,8 @@ import { LoanCalculationComponent } from './loan-calculation/loan-calculation.co
 const FRAMEWORK_MODULES = [
   ReactiveFormsModule,
   BrowserAnimationsModule,
-  FlexLayoutModule
+  FlexLayoutModule,
+  HttpClientModule
 ]
 
 const MATERIAL_MODULES = [
@@ -55,11 +57,6 @@ const MATERIAL_MODULES = [
     ...MATERIAL_MODULES,
     BrowserModule,
     AppRoutingModule,
-    RouterModule.forRoot([
-      { path: '', component: HomeComponent },
-      { path: 'apply', component: LoanApplicationComponent },
-      { path: 'calculation', component: LoanCalculationComponent }
-    ]),
     BrowserAnimationsModule,
   ],
   providers: [],

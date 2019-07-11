@@ -33,4 +33,12 @@ export class LoanCalculationComponent implements OnInit {
     });
   }
 
+  getTotalAmount() {
+    return this.payments.map(t => t.amountDue).reduce((acc, value) => acc + value, 0);
+  }
+
+  getTotalInterests() {
+    return this.payments.map(t => t.interests).reduce((acc, value) => acc + value, 0);
+  }
+
 }

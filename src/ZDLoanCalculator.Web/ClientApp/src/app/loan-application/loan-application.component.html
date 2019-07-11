@@ -1,13 +1,13 @@
-<mat-card class="mat-elevation-z1" fxFlex="1 1 50%" fxFlexOffset="25%">
-    <form id="loanApplication" [formGroup]="applicationForm" (ngSubmit)="calculate()">
+<mat-card class="mat-elevation-z3" fxFlex="1 1 50%" fxFlexOffset="25%">
+  <form id="loanApplication" [formGroup]="applicationForm" (ngSubmit)="calculate()">
 
-  <mat-card-title>
-    Loan application
-  </mat-card-title>
+    <mat-card-title>
+      Loan application
+    </mat-card-title>
 
-  <div *ngIf="!isReady()" style="height: 20em; text-align: center" fxFlexAlign="center center">
-    <mat-spinner></mat-spinner>
-  </div>
+    <div *ngIf="!isReady()" style="height: 20em; text-align: center" fxFlexAlign="center center">
+      <mat-spinner></mat-spinner>
+    </div>
 
     <mat-card-content *ngIf="isReady()">
       <label id="loan-type-label">What type of loan do you need?</label>
