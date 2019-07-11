@@ -29,6 +29,8 @@ namespace ZDLoanCalculator.Web
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+
+            services.Configure<ProxyOptions>(Configuration.GetSection("Api"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,7 +57,7 @@ namespace ZDLoanCalculator.Web
                     template: "{controller}/{action=Index}/{id?}");
             });
 
-            //app.MapWhen(IsApiPath, builder => builder.RunProxy(Configuration.GetSection("Api") as ProxyOptions));
+            app.MapWhen(IsApiPath, builder => builder.RunProxy());
 
             app.UseSpa(spa =>
             {
