@@ -7,7 +7,7 @@ using ZDLoanCalculator.Core.PaymentSchemes;
 namespace ZDLoanCalculator.Test.PaymentSchemes
 {
     [TestFixture]
-    public class SeriesLoanPaymentSchemeTests
+    public class SeriesPaymentSchemeTests
     {
         [Test]
         public void Should_be_able_to_calculate_one_period()
