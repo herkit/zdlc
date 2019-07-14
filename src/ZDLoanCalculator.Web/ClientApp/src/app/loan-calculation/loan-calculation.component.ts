@@ -12,7 +12,7 @@ export class LoanCalculationComponent implements OnInit {
 
   constructor(private loanCalculator: LoanCalculatorService, private route: ActivatedRoute) { }
 
-  displayedColumns: string[] = ['periodNumber', 'amountDue', 'interests'];
+  displayedColumns: string[] = ['periodNumber', 'interests', 'amountDue'];
   payments: Payment[];
   loading: boolean = false;
 
