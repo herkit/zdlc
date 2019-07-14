@@ -9,12 +9,12 @@ using System.Linq;
 namespace ZDLoanCalculator.Test.PaymentSchemes
 {
     [TestFixture]
-    public class AnnuityPaymentSchemeTests
+    public class AmortizingPaymentSchemeTests
     {
         [Test]
         public void Should_calculate_one_period()
         {
-            var calculator = new AnnuityPaymentScheme();
+            var calculator = new AmortizingPaymentScheme();
             var installments = calculator.GetPayments(1000, 0.12f, 1, 12);
             installments.Count().Should().Be(1);
             installments.First().AmountDue.Should().Be(1010);
@@ -24,7 +24,7 @@ namespace ZDLoanCalculator.Test.PaymentSchemes
         [Test]
         public void Should_calculate_two_installments()
         {
-            var calculator = new AnnuityPaymentScheme();
+            var calculator = new AmortizingPaymentScheme();
             var installments = calculator.GetPayments(1000, 0.12f, 2, 12);
             installments.Count().Should().Be(2);
             installments.First().AmountDue.Should().Be(507.51m);
@@ -34,14 +34,15 @@ namespace ZDLoanCalculator.Test.PaymentSchemes
         [TestCase(2500000, 0.035f, 300)]
         public void Loan_should_be_fully_repaid(decimal initalLoan, float annualInterestRate, int periods)
         {
-            var calculator = new AnnuityPaymentScheme();
+            var calculator = new AmortizingPaymentScheme();
             var payments = calculator.GetPayments(initalLoan, annualInterestRate, periods, 12);
 
             var remainingLoan = initalLoan;
             foreach (var payment in payments)
             {
-                decimal interests = Math.Round((decimal)((double)remainingLoan * annualInterestRate / 12), 2);
-                remainingLoan = remainingLoan + interests - payment.AmountDue;
+
+                decimal interest = Math.Ceiling((decimal)((float)remainingLoan * 10000 * annualInterestRate / 12)) / 10000;
+                remainingLoan = remainingLoan + interest - payment.AmountDue;
             }
             Math.Round(remainingLoan, 2).Should().Be(0);
         }
